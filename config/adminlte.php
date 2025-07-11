@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>張董</b>商城',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => '/LOGO.ico',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_alt' => '張董商城',
 
@@ -108,7 +108,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
@@ -254,13 +254,13 @@ return [
     |
     */
 
-    'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'use_route_url' => true,
+    'dashboard_url' => 'admin.dashboard',
     'logout_url' => 'logout',
-    'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
-    'password_email_url' => 'password/email',
+    // 'login_url' => 'login',
+    // 'register_url' => 'register',
+    // 'password_reset_url' => 'password/reset',
+    // 'password_email_url' => 'password/email',
     'profile_url' => false,
     'disable_darkmode_routes' => false,
 
@@ -298,22 +298,50 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type' => 'navbar-search',
+        //     'text' => 'search',
+        //     'topnav_right' => true,
+        // ],
+        // [
+        //     'type' => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
 
         // Sidebar items:
         [
             'text' => '後台首頁',
             'url'  => 'admin',
             'icon' => 'fas fa-tachometer-alt',
-            'active' => ['admin', 'admin/*'], // 設定活躍狀態
+            'active' => ['admin'], // 設定活躍狀態
+        ],
+        // 🔥 新增商品管理
+        [
+            'text' => '商品管理',
+            'icon' => 'fas fa-box',
+            'active' => ['admin/products*'],
+            'submenu' => [
+                [
+                    'text' => '商品列表',
+                    'url'  => 'admin/products',
+                    'icon' => 'fas fa-list-ul',
+                    'active' => ['admin/products'], // 🔥 加入 active
+
+                ],
+                [
+                    'text' => '新增商品',
+                    'url'  => 'admin/products/create',
+                    'icon' => 'fas fa-plus-circle',
+                    'active' => ['admin/products/create'], // 🔥 加入 active
+                ],
+
+            ],
+        ],
+        [
+            'text' => '更換權限',
+            'icon' => 'fas fa-user',
+            'url'  => 'admin/changeStatus',
+            'active' => ['admin/changeStatus*'],
         ],
     ],
 
@@ -358,17 +386,17 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'location' => 'https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'location' => 'https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'location' => 'https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
@@ -378,12 +406,12 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],
         ],
@@ -398,12 +426,17 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/handleSweetalert.js', // 🔥 加入您的Helper
                 ],
             ],
         ],

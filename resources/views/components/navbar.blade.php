@@ -1,7 +1,7 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 mb-20">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/LOGO (2).png" alt="{{ $siteName }}" style="height:66px;" class="me-2">
+            <img src="{{ asset('LOGO(2).png') }}" alt="{{ $siteName }}" style="height:66px;" class="me-2">
 
         </a>
         <button data-collapse-toggle="navbar-dropdown" type="button"
@@ -29,17 +29,30 @@
                     </li>
                 @endforeach
                 @if ($isLoggedIn)
-                @foreach ($adminMenuItems as $item)
-                    <li>
-                        <a href="{{ route($item['route']) }}"
-                            class="block py-2 px-3 rounded-sm md:p-0 {{ $item['active']
-                                ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent'
-                                : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }}"
-                            @if ($item['active']) aria-current="page" @endif>
-                            {{ $item['name'] }}
-                        </a>
-                    </li>
-                @endforeach
+                    @isset($adminMenuItems)
+                        @foreach ($adminMenuItems as $item)
+                            <li>
+                                <a href="{{ route($item['route']) }}"
+                                    class="block py-2 px-3 rounded-sm md:p-0 {{ $item['active']
+                                        ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent'
+                                        : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }}"
+                                    @if ($item['active']) aria-current="page" @endif>
+                                    {{ $item['name'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    @endisset
+                    {{-- @foreach ($userMenuItems as $item)
+                            <li>
+                                <a href="{{ route($item['route']) }}"
+                                    class="block py-2 px-3 rounded-sm md:p-0 {{ $item['active']
+                                        ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent'
+                                        : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }}"
+                                    @if ($item['active']) aria-current="page" @endif>
+                                    {{ $item['name'] }}
+                                </a>
+                            </li>
+                        @endforeach --}}
                     <div class="relative inline-block text-left">
                         <button id="userMenuButton" data-dropdown-toggle="userMenuDropdown"
                             class="inline-flex w-full justify-center rounded-md bg-gray-200 dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">

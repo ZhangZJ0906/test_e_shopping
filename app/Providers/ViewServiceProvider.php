@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -44,7 +45,9 @@ class ViewServiceProvider extends ServiceProvider
                 'register' => '註冊',
                 'login' => '登入',
                 'welcome' => '歡迎',
-                'backend' => '後台',
+                'dashboard' => '後台',
+                'prodicts.index' => '商品列表',
+                'prodicts.create' => '新增商品',
             ];
             $view->with([
                 'siteName'    => '張董商城',
@@ -56,11 +59,21 @@ class ViewServiceProvider extends ServiceProvider
 
         // 為navbar提供資料 frontend
         View::composer('components.navbar', function ($view) {
-            $view->with([
-                'navigationItems' => $this->getNavigationItems(),
-                'userMenuItems' => $this->getUserMenuItems(),
-                'adminMenuItems' => $this->getAdminMenuItems(),
-            ]);
+            $role = $this->getrole();
+
+            if ($role == 'member') {
+                $view->with([
+                    'navigationItems' => $this->getNavigationItems(),
+                    'userMenuItems' => $this->getUserMenuItems(),
+                    // 'adminMenuItems' => $this->getAdminMenuItems(),
+                ]);
+            } else {
+                $view->with([
+                    'navigationItems' => $this->getNavigationItems(),
+                    'userMenuItems' => $this->getUserMenuItems(),
+                    'adminMenuItems' => $this->getAdminMenuItems(),
+                ]);
+            }
         });
 
         // 為footer提供資料  frontend
@@ -89,7 +102,19 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
     }
+    /**
+     * 取得登入人身分
+     */
+    protected function getrole()
+    {
+        if (Auth::check()) {
+            $user = Auth::user()->role;
 
+            // dd($user);
+            return $user;
+        }
+        return null;
+    }
     /**
      * 取得導航項目 普通人
      */
@@ -118,7 +143,7 @@ class ViewServiceProvider extends ServiceProvider
             return [
                 [
                     'name' => '個人資料',
-                    'route' => 'profile.show',
+                    'route' => 'profile',
                 ],
                 [
                     'name' => '訂單記錄',
@@ -137,8 +162,8 @@ class ViewServiceProvider extends ServiceProvider
             return [
                 [
                     'name' => '後台',
-                    'route' => 'backend', // 這裡填 web.php 路由命名
-                    'active' => request()->routeIs('backend')
+                    'route' => 'admin.dashboard', // 這裡填 web.php 路由命名
+                    'active' => request()->routeIs('dashboard')
 
                 ],
             ];

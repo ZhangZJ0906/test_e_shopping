@@ -21,8 +21,30 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',  // 🔥 加這行
     ];
+    // 🔥 角色常數定義
+    const ROLE_ADMIN = 'admin';
+    const ROLE_BOSS = 'boss';
+    const ROLE_ENGINEER = 'engineer';
+    const ROLE_GUEST = 'guest';
+    const ROLE_MEMBER = 'member';
 
+    // 🔥 角色判斷方法
+    public function isAdmin()
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isBoss()
+    {
+        return $this->role === self::ROLE_BOSS;
+    }
+
+    public function isEngineer()
+    {
+        return $this->role === self::ROLE_ENGINEER;
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

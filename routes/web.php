@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ChangeStatusController;
+use App\Http\Controllers\ProFileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +29,19 @@ Route::middleware(['guest'])->group(function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/admin', [AuthController::class, 'showBackend'])->name('backend');
+    Route::get('/profile', [ProFileController::class, 'showProfile'])->name('profile');
+    // 後台路由用 prefix 群組
+    Route::middleware(['role:admin,boss,engineer'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AuthController::class, 'showBackend'])->name('dashboard');
+        Route::get('/products', [ProductController::class, 'showProduct'])->name('products');
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::put('/products/{id}', [ProductController::class, 'updateProduct'])->name('products.update');
+        Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::get('/changeStatus', [ChangeStatusController::class, 'showChangeStatus'])->name('changeStatus');
+        Route::put('/changeStatus/{id}', [ChangeStatusController::class, 'updateChangeStatus'])->name('changeStatus.update');
+
+    });
 });
+
+

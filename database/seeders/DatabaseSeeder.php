@@ -31,16 +31,18 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => '管理員',
                 'email' => 'admin@shop.com',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('123'),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'role' => 'admin',
             ],
             [
                 'name' => '測試用戶',
                 'email' => 'test@shop.com',
-                'password' => Hash::make('test123'),
+                'password' => Hash::make('123'),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'role' => 'member',
             ]
         ]);
 
