@@ -42,7 +42,7 @@
                             </li>
                         @endforeach
                     @endisset
-                    {{-- @foreach ($userMenuItems as $item)
+                    @foreach ($userMenuItems as $item)
                             <li>
                                 <a href="{{ route($item['route']) }}"
                                     class="block py-2 px-3 rounded-sm md:p-0 {{ $item['active']
@@ -52,7 +52,7 @@
                                     {{ $item['name'] }}
                                 </a>
                             </li>
-                        @endforeach --}}
+                        @endforeach
                     <div class="relative inline-block text-left">
                         <button id="userMenuButton" data-dropdown-toggle="userMenuDropdown"
                             class="inline-flex w-full justify-center rounded-md bg-gray-200 dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">

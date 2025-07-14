@@ -35,6 +35,9 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'role' => 'admin',
+                'phone' => '0968762880',
+                'gender' => 'male',
+
             ],
             [
                 'name' => '測試用戶',
@@ -43,6 +46,8 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'role' => 'member',
+                'phone' => '0968762870',
+                'gender' => 'female',
             ]
         ]);
 

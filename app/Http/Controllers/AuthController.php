@@ -74,6 +74,8 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'gender' => 'required',
+            'phone' => 'required | numeric',
         ], [
             // 自訂錯誤訊息
             'name.required' => '姓名為必填欄位',
@@ -82,16 +84,22 @@ class AuthController extends Controller
             'email.unique' => '此電子郵件已被註冊',
             'password.required' => '密碼為必填欄位',
             'password.min' => '密碼至少需要8個字元',
+            'gender.required' => '性別為必填欄位',
+            'phone.required' => '手機為必填欄位',
             // 'password.confirmed' => '密碼確認不符',
         ]);
+        // dd($validated);
 
         try {
             // 建立使用者
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
+                'gender' => $validated['gender'],
+                'phone' => $validated['phone'],
                 'password' => Hash::make($validated['password']),
             ]);
+        // dd($user);
 
             // 自動登入
             Auth::login($user);

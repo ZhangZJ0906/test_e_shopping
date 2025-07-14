@@ -343,6 +343,11 @@ return [
             'url'  => 'admin/changeStatus',
             'active' => ['admin/changeStatus*'],
         ],
+        [
+            'text' => '前往首頁',
+            'icon' => 'fas fa-home',
+            'url'  => '/',
+        ],
     ],
 
     /*

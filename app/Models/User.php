@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',  // 🔥 加這行
+        'phone',
+        'gender',
+        
     ];
     // 🔥 角色常數定義
     const ROLE_ADMIN = 'admin';

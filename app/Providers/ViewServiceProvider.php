@@ -39,15 +39,13 @@ class ViewServiceProvider extends ServiceProvider
             ]);
             $route = Route::current();
             $routeName = $route ? $route->getName() : null;
-            // 根據不同 routeName 給不同 name
+            // 根據不同 routeName 給不同 name 前端
             $titleMap = [
                 'home' => '首頁',
                 'register' => '註冊',
                 'login' => '登入',
                 'welcome' => '歡迎',
-                'dashboard' => '後台',
-                'prodicts.index' => '商品列表',
-                'prodicts.create' => '新增商品',
+                'profile' => '個人資料',
             ];
             $view->with([
                 'siteName'    => '張董商城',
@@ -144,11 +142,13 @@ class ViewServiceProvider extends ServiceProvider
                 [
                     'name' => '個人資料',
                     'route' => 'profile',
+                    'active' => request()->routeIs('profile')
+
                 ],
-                [
-                    'name' => '訂單記錄',
-                    'route' => 'orders.index',
-                ],
+                // [
+                //     'name' => '訂單記錄',
+                //     'route' => 'orders.index',
+                // ],
             ];
         }
 

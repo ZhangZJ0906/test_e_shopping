@@ -30,6 +30,8 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [ProFileController::class, 'showProfile'])->name('profile');
+    Route::post('/profile/{id}', [ProFileController::class, 'updateProfile'])->name('profile.update');
+
     // 後台路由用 prefix 群組
     Route::middleware(['role:admin,boss,engineer'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AuthController::class, 'showBackend'])->name('dashboard');
