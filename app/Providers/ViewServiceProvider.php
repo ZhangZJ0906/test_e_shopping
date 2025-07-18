@@ -46,6 +46,7 @@ class ViewServiceProvider extends ServiceProvider
                 'login' => '登入',
                 'welcome' => '歡迎',
                 'profile' => '個人資料',
+                'forgot-password' => '忘記密碼',
             ];
             $view->with([
                 'siteName'    => '張董商城',

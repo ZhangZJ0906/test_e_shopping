@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ApiForgotPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,7 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/forgot-password/check-email', [ApiForgotPasswordController::class, 'checkEmail']);
+Route::post('/forgot-password/reset', [ApiForgotPasswordController::class, 'resetPassword']);
 

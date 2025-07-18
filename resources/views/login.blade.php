@@ -11,6 +11,7 @@
             <div class="mb-4">
                 <label for="password" class="block mb-1">Password</label>
                 <input type="password" name="password" id="password" required class="w-full p-2 text-black rounded">
+                <small><a href="{{ route('forgot-password') }}" class="text-blue-500">忘記密碼</a></small>
             </div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white w-full">
                 Login
