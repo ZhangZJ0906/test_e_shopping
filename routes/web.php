@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\ProFileController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\FrontendController;
 
 
 /*
@@ -19,9 +20,11 @@ use App\Http\Controllers\ForgotPasswordController;
 |
 */
 
-Route::get('/', [AuthController::class, 'showWelcome'])->name('home'); // 首頁
+    Route::get('/', [AuthController::class, 'showWelcome'])->name('home'); // 首頁
+    Route::get('/products/{id}', [FrontendController::class, 'showFrontendProduct'])->name('frontendProducts.show'); // 秀出單一產品
 
-Route::middleware(['guest'])->group(function () {
+
+Route::middleware(['guest'])->group(function () {// 未登入
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); // 登入表單
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit'); // 登入API
@@ -30,7 +33,8 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit'); // 註冊API
 
     Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password'); // 忘記密碼表單
-    
+
+
 
 });
 Route::middleware(['auth'])->group(function () { //已登入

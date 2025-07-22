@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,11 +14,12 @@ class AuthController extends Controller
     // welcome
     public function showWelcome()
     {
+        $products = Product::all();
         return view('layouts.app', [
             'view' => 'welcome',
             'title' => '主頁',
             // 全域變數都會自動有，這裡也能加特殊變數
-        ]);
+        ], compact('products'));
     }
 
     public function showBackend()
@@ -99,7 +101,7 @@ class AuthController extends Controller
                 'phone' => $validated['phone'],
                 'password' => Hash::make($validated['password']),
             ]);
-        // dd($user);
+            // dd($user);
 
             // 自動登入
             Auth::login($user);
