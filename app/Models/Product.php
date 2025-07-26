@@ -16,4 +16,13 @@ class Product extends Model
         'description',
         'image',
     ];
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'product_id');
+    }
+        public function cartitems()
+    {
+        return $this->hasMany(CartItem::class, 'product_id');
+    }
+
 }

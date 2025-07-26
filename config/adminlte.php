@@ -30,8 +30,9 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
+
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +65,7 @@ return [
     */
 
     'logo' => '<b>張董</b>商城',
-    'logo_img' => '/LOGO.ico',
+    'logo_img' => '/favicon.ico',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_alt' => '張董商城',
 
@@ -311,7 +312,7 @@ return [
         // Sidebar items:
         [
             'text' => '後台首頁',
-            'url'  => 'admin',
+            'url' => 'admin',
             'icon' => 'fas fa-tachometer-alt',
             'active' => ['admin'], // 設定活躍狀態
         ],
@@ -323,14 +324,14 @@ return [
             'submenu' => [
                 [
                     'text' => '商品列表',
-                    'url'  => 'admin/products',
+                    'url' => 'admin/products',
                     'icon' => 'fas fa-list-ul',
                     'active' => ['admin/products'], // 🔥 加入 active
 
                 ],
                 [
                     'text' => '新增商品',
-                    'url'  => 'admin/products/create',
+                    'url' => 'admin/products/create',
                     'icon' => 'fas fa-plus-circle',
                     'active' => ['admin/products/create'], // 🔥 加入 active
                 ],
@@ -340,13 +341,19 @@ return [
         [
             'text' => '更換權限',
             'icon' => 'fas fa-user',
-            'url'  => 'admin/changeStatus',
+            'url' => 'admin/changeStatus',
             'active' => ['admin/changeStatus*'],
+        ],
+        [
+            'text' => '查看訂單',
+            'icon' => 'fas fa-shipping-fast',
+            'url' => 'admin/total-order',
+            'active' => ['admin/total-order*'],
         ],
         [
             'text' => '前往首頁',
             'icon' => 'fas fa-home',
-            'url'  => '/',
+            'url' => '/',
         ],
     ],
 

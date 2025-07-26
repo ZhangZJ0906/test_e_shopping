@@ -147,10 +147,11 @@ class ViewServiceProvider extends ServiceProvider
                     'active' => request()->routeIs('profile')
 
                 ],
-                // [
-                //     'name' => '訂單記錄',
-                //     'route' => 'orders.index',
-                // ],
+                [
+                    'name' => '查看訂單',
+                    'route' => 'orders',
+                    'active' => request()->routeIs('orders'),
+                ],
             ];
         }
 

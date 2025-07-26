@@ -14,22 +14,29 @@
                     <div><span class="font-semibold">商品名稱：</span>{{ $product->name }}</div>
                     <div><span class="font-semibold">商品價格：</span>{{ $product->price }}</div>
                     <div><span class="font-semibold">商品詳述：</span>{{ $product->description }}</div>
-                    <div><span class="font-semibold">商品庫存：</span>{{ $product->stock }}</div>
+                    <div id="stock"><span class="font-semibold">商品庫存：</span>{{ $product->stock }}</div>
                 </div>
-                <div class="mt-12 pt-10 border-t border-gray-200 flex justify-end">
-                    <button
-                        class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-3 px-8 text-lg rounded-xl shadow-lg flex items-center gap-3 transition-all duration-200 transform hover:-translate-y-1 hover:scale-105">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="2.2"
-                            viewBox="0 0 24 24">
-                            <circle cx="8" cy="21" r="1"></circle>
-                            <circle cx="19" cy="21" r="1"></circle>
-                            <path
-                                d="M2.05 2.05 6 6h15l-1.68 8.39A2 2 0 0 1 17.36 16H8.64a2 2 0 0 1-1.96-1.61L4 8m0 0L2 2m2 6h16">
-                            </path>
-                        </svg>
-                        加入購物車
-                    </button>
-                </div>
+                <form method="POST" action="{{ route('cart.add') }}" class="mt-12">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <label for="quantity" class="font-semibold text-lg ">買多少</label>
+                    <input type="number" name="quantity" value="1" id="quantity"> {{-- 可動態調整數量 --}}
+
+                    <div class="mt-12 pt-10 border-t border-gray-200 flex justify-end">
+                        <button
+                            class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-3 px-8 text-lg rounded-xl shadow-lg flex items-center gap-3 transition-all duration-200 transform hover:-translate-y-1 hover:scale-105">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="2.2"
+                                viewBox="0 0 24 24">
+                                <circle cx="8" cy="21" r="1"></circle>
+                                <circle cx="19" cy="21" r="1"></circle>
+                                <path
+                                    d="M2.05 2.05 6 6h15l-1.68 8.39A2 2 0 0 1 17.36 16H8.64a2 2 0 0 1-1.96-1.61L4 8m0 0L2 2m2 6h16">
+                                </path>
+                            </svg>
+                            加入購物車
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -56,4 +63,22 @@
             error: '{{ $errors->first() }}',
         @endif
     };
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const stock = parseInt("{{ $product->stock }}");
+        const quantityInput = document.getElementById('quantity');
+
+        quantityInput.addEventListener('input', function() {
+            const buy = parseInt(quantityInput.value);
+
+            if (buy > stock) {
+                alert('庫存不足！');
+                quantityInput.value = stock; // 自動修正為最大可買數
+            } else if (buy < 1) {
+                quantityInput.value = 1;
+            }
+        });
+    });
 </script>

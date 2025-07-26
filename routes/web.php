@@ -7,6 +7,9 @@ use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\ProFileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartItemController;
+
 
 
 /*
@@ -20,11 +23,11 @@ use App\Http\Controllers\FrontendController;
 |
 */
 
-    Route::get('/', [AuthController::class, 'showWelcome'])->name('home'); // 首頁
-    Route::get('/products/{id}', [FrontendController::class, 'showFrontendProduct'])->name('frontendProducts.show'); // 秀出單一產品
+Route::get('/', [AuthController::class, 'showWelcome'])->name('home'); // 首頁
+Route::get('/products/{id}', [FrontendController::class, 'showFrontendProduct'])->name('frontendProducts.show'); // 秀出單一產品
 
 
-Route::middleware(['guest'])->group(function () {// 未登入
+Route::middleware(['guest'])->group(function () { // 未登入
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); // 登入表單
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit'); // 登入API
@@ -44,6 +47,12 @@ Route::middleware(['auth'])->group(function () { //已登入
     Route::post('/profile/{id}', [ProFileController::class, 'updateProfile'])->name('profile.update'); // 更新個人資料
     Route::put('/profile/password/{id}', [ProFileController::class, 'editPassWordProfile'])->name('profile.editPassWord'); // 更新個人資料
 
+    Route::get('/orders', [OrderController::class, 'showOrder'])->name('orders'); // 購物車
+    Route::post('/cart/add', [CartItemController::class, 'addCart'])->name('cart.add');//加入購物車
+    Route::post('/cart/checkout', [CartItemController::class, 'checkout'])->name('checkout');//假結帳
+    Route::patch('/cart/update/{id}', [CartItemController::class, 'updateCart'])->name('cart.update'); // 更新購物車
+    Route::delete('/cart/delete/{id}', [CartItemController::class, 'deleteCart'])->name('cart.delete'); // 刪除購物車
+
     // 後台路由用 prefix 群組
     Route::middleware(['role:admin,boss,engineer'])->prefix('admin')->name('admin.')->group(function () { //登入且是admin,boss,engineer才能用
         Route::get('/', [AuthController::class, 'showBackend'])->name('dashboard'); //後台
@@ -56,6 +65,9 @@ Route::middleware(['auth'])->group(function () { //已登入
 
         Route::get('/changeStatus', [ChangeStatusController::class, 'showChangeStatus'])->name('changeStatus'); // 權限頁面
         Route::put('/changeStatus/{id}', [ChangeStatusController::class, 'updateChangeStatus'])->name('changeStatus.update'); // 更新權限
+
+        Route::get('/total-order', [OrderController::class, 'showAdminOrder'])->name(name: 'total-order'); // 查看訂單
+        Route::patch('/total-order/{id}', [OrderController::class, 'updateAdminOrder'])->name('update-total-order');
 
     });
 });

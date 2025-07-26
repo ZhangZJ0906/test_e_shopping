@@ -43,8 +43,13 @@ Breadcrumbs::for('admin.products.update', function (BreadcrumbTrail $trail, $pro
     $trail->parent('admin.products');
     $trail->push('編輯商品', route('admin.products.update', $productId));
 });
-
+// 更換權限
 Breadcrumbs::for('admin.changeStatus', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('更換權限', route('admin.changeStatus'));
+});
+// 查看訂單
+Breadcrumbs::for('admin.total-order', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('查看訂單', route('admin.total-order'));
 });
