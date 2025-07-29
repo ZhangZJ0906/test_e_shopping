@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -22,9 +24,26 @@ class AuthController extends Controller
         ], compact('products'));
     }
 
+    // backend 後台
     public function showBackend()
     {
-        return view('backend.index',);
+        // 圖表 1：狀態分佈
+        $statusCounts = Order::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        // 圖表 2：每日訂單金額總和
+        $dailyData = Order::select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total_price) as total'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('total', 'date');
+
+        return view('backend.index', [
+            'statusLabels' => $statusCounts->keys(),
+            'statusData' => $statusCounts->values(),
+            'dailyLabels' => $dailyData->keys(),
+            'dailyData' => $dailyData->values(),
+        ]);
     }
     //login 
     public function login(Request $request)
@@ -37,7 +56,8 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return redirect()->route('home');
-        };
+        }
+        ;
         // 登入失敗
         return back()->withErrors([
             'email' => '帳號或密碼錯誤',
